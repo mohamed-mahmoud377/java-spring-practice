@@ -1,0 +1,52 @@
+# ---- Build output ----
+target/
+build/
+out/
+bin/
+*.class
+
+# ---- Maven ----
+.mvn/wrapper/maven-wrapper.jar
+release.properties
+dependency-reduced-pom.xml
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+
+# ---- Gradle ----
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# ---- IntelliJ IDEA ----
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# ---- Eclipse / VS Code ----
+.settings/
+.project
+.classpath
+.vscode/
+.factorypath
+
+# ---- Junie ----
+.junie/
+
+# ---- Logs & temp ----
+*.log
+logs/
+*.tmp
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Spring Boot / env ----
+*.pid
+application-local.properties
+application-local.yml
+.env
