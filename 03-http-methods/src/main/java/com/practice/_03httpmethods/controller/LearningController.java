@@ -83,9 +83,6 @@ public class LearningController {
         return UserView.of(authenticate(username, password));
     }
 
-    @PostMapping("send-firned-request")
-    public List<Course> listCourses(@RequestHeader("X-token") String token,
-                                    @RequestParam(value = "active", required = false) Boolean active) {
     // =====================================================================
     // COURSES — the main tour of methods, path variables and query params.
     // =====================================================================
