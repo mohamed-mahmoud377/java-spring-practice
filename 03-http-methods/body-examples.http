@@ -1,0 +1,85 @@
+### 03 — Body & content-type examples (BodyExampleController)
+# Watch the Content-Type (what you send) and Accept (what you want back) headers.
+
+@host = http://localhost:8081
+
+### 1) Plain text in & out
+POST {{host}}/examples/echo-text
+Content-Type: text/plain
+
+hello there, this is raw text
+
+### 2) JSON in & out
+POST {{host}}/examples/json
+Content-Type: application/json
+
+{
+  "name": "Sara",
+  "message": "hi"
+}
+
+### 3) XML in & out
+POST {{host}}/examples/xml
+Content-Type: application/xml
+Accept: application/xml
+
+<Greeting>
+  <name>Sara</name>
+  <message>hi</message>
+</Greeting>
+
+### 4a) Same endpoint, ask for JSON (Accept header)
+GET {{host}}/examples/greeting?name=Sara
+Accept: application/json
+
+### 4b) Same endpoint, ask for XML — identical URL, different Accept
+GET {{host}}/examples/greeting?name=Sara
+Accept: application/xml
+
+### 5) Form data (application/x-www-form-urlencoded)
+POST {{host}}/examples/form
+Content-Type: application/x-www-form-urlencoded
+
+name=Sara&message=hello from a form
+
+### 6a) Same path /flexible — routed to the JSON method by Content-Type
+POST {{host}}/examples/flexible
+Content-Type: application/json
+
+{ "name": "Sara", "message": "x" }
+
+### 6b) Same path /flexible — routed to the TEXT method by Content-Type
+POST {{host}}/examples/flexible
+Content-Type: text/plain
+
+just some text
+
+### 7a) Download raw bytes (octet-stream)
+GET {{host}}/examples/download
+
+### 7b) Upload a file (multipart/form-data)
+POST {{host}}/examples/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="hello.txt"
+Content-Type: text/plain
+
+the contents of the uploaded file
+--WebAppBoundary--
+
+### 8) Echo anything — reports the Content-Type and raw body it received
+POST {{host}}/examples/echo
+Content-Type: application/json
+
+{ "anything": true }
+
+### 9) Real-world create: 201 + Location header, body as XML (via Accept)
+POST {{host}}/examples/tickets
+Content-Type: application/json
+Accept: application/xml
+
+{
+  "title": "Printer broken",
+  "severity": "high"
+}

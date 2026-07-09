@@ -1,0 +1,5 @@
+# Build output
+target/
+
+# Runtime "database" — generated on first run, not source
+data/

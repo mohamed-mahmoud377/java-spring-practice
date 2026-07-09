@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 — Student / Course client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Student &amp; Course</h1>
+    <!-- Filled in once you log in; hidden until then. -->
+    <div id="who" class="who hidden">
+        <span id="who-text"></span>
+        <button id="logout-btn" class="link">Log out</button>
+    </div>
+</header>
+
+<!-- A single place to show success / error messages from the API. -->
+<div id="banner" class="banner hidden"></div>
+
+<main>
+
+    <!-- ============ LOGIN VIEW ============ -->
+    <section id="login-view" class="card">
+        <h2>Log in</h2>
+        <p class="hint">Built-in admin: <code>admin</code> / <code>admin123</code>.
+            Students are created by the admin.</p>
+        <form id="login-form">
+            <label>Username <input id="login-username" autocomplete="username" required></label>
+            <label>Password <input id="login-password" type="password" autocomplete="current-password" required></label>
+            <button type="submit">Log in</button>
+        </form>
+    </section>
+
+    <!-- ============ ADMIN VIEW ============ -->
+    <section id="admin-view" class="hidden">
+
+        <div class="card">
+            <h2>Create a course <span class="tag">POST /api/courses</span></h2>
+            <form id="create-course-form" class="row">
+                <input id="new-course-name" placeholder="Course name" required>
+                <label class="checkbox"><input id="new-course-active" type="checkbox" checked> active</label>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Courses <span class="tag">GET /api/courses?active=…</span></h2>
+            <div class="row">
+                <label>Filter
+                    <select id="admin-course-filter">
+                        <option value="">all</option>
+                        <option value="true">active only</option>
+                        <option value="false">inactive only</option>
+                    </select>
+                </label>
+                <button id="admin-refresh-courses" class="link">refresh</button>
+            </div>
+            <table id="admin-courses-table">
+                <thead>
+                <tr><th>id</th><th>name</th><th>status</th><th>actions</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Create a student <span class="tag">POST /api/users</span></h2>
+            <form id="create-student-form" class="row">
+                <input id="new-student-username" placeholder="username" required>
+                <input id="new-student-password" placeholder="password" required>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Users <span class="tag">GET /api/users</span></h2>
+            <button id="admin-refresh-users" class="link">refresh</button>
+            <table id="admin-users-table">
+                <thead>
+                <tr><th>username</th><th>role</th><th>enrolled in</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ============ STUDENT VIEW ============ -->
+    <section id="student-view" class="hidden">
+
+        <div class="card">
+            <h2>My courses <span class="tag">GET /api/me/courses</span></h2>
+            <button id="student-refresh-mine" class="link">refresh</button>
+            <table id="student-mine-table">
+                <thead>
+                <tr><th>id</th><th>name</th><th>status</th><th>actions</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Browse courses <span class="tag">GET /api/courses?active=…</span></h2>
+            <div class="row">
+                <label>Filter
+                    <select id="student-course-filter">
+                        <option value="true">active only</option>
+                        <option value="">all</option>
+                        <option value="false">inactive only</option>
+                    </select>
+                </label>
+                <button id="student-refresh-courses" class="link">refresh</button>
+            </div>
+            <table id="student-courses-table">
+                <thead>
+                <tr><th>id</th><th>name</th><th>status</th><th>actions</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

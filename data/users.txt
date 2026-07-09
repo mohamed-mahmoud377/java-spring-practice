@@ -1,0 +1,3 @@
+admin|admin123|ADMIN|
+jerry|jerry123|STUDENT|
+farah|farah123|STUDENT|

@@ -1,0 +1,2 @@
+1|course1|false
+3|arabic|true

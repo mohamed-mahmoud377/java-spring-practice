@@ -1,0 +1,114 @@
+### 03 — HTTP methods playground
+# Open this file in IntelliJ and click the green ▶ next to each request.
+# (Or copy the equivalent curl from the README.)
+#
+# Auth is via headers on EVERY protected call: X-Username + X-Password.
+# Built-in admin: admin / admin123
+
+@host = http://localhost:8081
+
+### LOGIN as admin (headers) — proves your credentials work
+GET {{host}}/api/login
+X-Username: admin
+X-Password: admin123
+
+### Create a course (POST + JSON body) — admin only
+POST {{host}}/api/courses
+X-Username: admin
+X-Password: admin123
+Content-Type: application/json
+
+{
+  "name": "Intro to Spring",
+  "active": true
+}
+
+### Create a second, INACTIVE course
+POST {{host}}/api/courses
+X-Username: admin
+X-Password: admin123
+Content-Type: application/json
+
+{
+  "name": "Advanced Databases",
+  "active": false
+}
+
+### List ALL courses (GET)
+GET {{host}}/api/courses
+X-Username: admin
+X-Password: admin123
+
+### List only ACTIVE courses (query parameter)
+GET {{host}}/api/courses?active=true
+X-Username: admin
+X-Password: admin123
+
+### Get one course by id (path variable) — change the 1 if needed
+GET {{host}}/api/courses/1
+X-Username: admin
+X-Password: admin123
+
+### Update a course (PUT + path variable + JSON body)
+PUT {{host}}/api/courses/2
+X-Username: admin
+X-Password: admin123
+Content-Type: application/json
+
+{
+  "active": true
+}
+
+### Create a student (POST) — admin only
+POST {{host}}/api/users
+X-Username: admin
+X-Password: admin123
+Content-Type: application/json
+
+{
+  "username": "amir",
+  "password": "secret"
+}
+
+### List users — admin only
+GET {{host}}/api/users
+X-Username: admin
+X-Password: admin123
+
+### ---- Now act as the student "amir" ----
+
+### Student enrolls in course 1 (POST + path variable, student's own headers)
+POST {{host}}/api/courses/1/enroll
+X-Username: amir
+X-Password: secret
+
+### Student's own courses
+GET {{host}}/api/me/courses
+X-Username: amir
+X-Password: secret
+
+### Student drops course 1 (DELETE)
+DELETE {{host}}/api/courses/1/enroll
+X-Username: amir
+X-Password: secret
+
+### A student trying an admin-only action → 403 Forbidden
+POST {{host}}/api/courses
+X-Username: amir
+X-Password: secret
+Content-Type: application/json
+
+{
+  "name": "Should Fail",
+  "active": true
+}
+
+### Wrong password → 401 Unauthorized
+GET {{host}}/api/courses
+X-Username: admin
+X-Password: wrong
+
+### Delete a course (DELETE) — admin only
+DELETE {{host}}/api/courses/2
+X-Username: admin
+X-Password: admin123
